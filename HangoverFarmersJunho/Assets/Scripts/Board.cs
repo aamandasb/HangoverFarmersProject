@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -11,11 +12,29 @@ public class Board : MonoBehaviour
     private Piece selectedPiece;
     public Vector3 vector3Base;
     public GameObject obstaclePrefab;
+    public TextMeshProUGUI JogadasText;
+    public int MaxJogadas = 10;
+    private int currentJogadas;
+    public GameManager gameManager;
+    public bool cabo;
+  
 
     void Start()
     {
+        currentJogadas = MaxJogadas;
         pieces = new Piece[width, height];
         InitializeBoard();
+    }
+
+    private void Update()
+    {
+        UpdateJogadaText();
+        if (currentJogadas <= 0 && !cabo)
+        {
+            cabo = true;
+            gameManager.gameOver();
+            Debug.Log("moleu");
+        }
     }
 
     void InitializeBoard()
@@ -58,8 +77,15 @@ public class Board : MonoBehaviour
         return Random.Range(0, piecePrefab.Length);
     }
 
+    private void UpdateJogadaText()
+    {
+        JogadasText.text = currentJogadas.ToString();
+      
+    }
+
     public void SelectPiece(Piece piece)
     {
+        if (currentJogadas <= 0) return;
         if (piece.frutType == FrutType.Obstacle) return; // Impede a seleção de peças de obstáculo
 
         if (selectedPiece == null)
@@ -110,6 +136,7 @@ public class Board : MonoBehaviour
         piece1.AnimateScale(vector3Base, 0.2f);
         piece2.AnimateScale(vector3Base, 0.2f);
         selectedPiece = null;
+        currentJogadas--;
         CheckForMatches();
     }
 
@@ -143,6 +170,7 @@ public class Board : MonoBehaviour
                         for (int k = 0; k < matchLength; k++)
                         {
                             piecesToDestroy.Add(pieces[x + k, y]);
+
                         }
                     }
                 }
@@ -271,4 +299,6 @@ public class Board : MonoBehaviour
         }
         piece.transform.position = newPosition;
     }
+
+
 }
