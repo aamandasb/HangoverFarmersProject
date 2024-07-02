@@ -8,4 +8,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 84eb0cdd93baf894196ba77455868825
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 363c9da89d691ea48b2d9a04dd3cdb32
+  - enabled: 1
+    path: Assets/Scenes/FarmHub.unity
+    guid: 466f0c73ef4b15542a5fdd19d25b1e52
   m_configObjects: {}
